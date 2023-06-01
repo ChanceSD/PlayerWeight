@@ -1,0 +1,27 @@
+name: PlayerWeight
+main: me.NoChance.PlayerWeight.PlayerWeight
+version: 1.3.9.1
+author: ChanceSD
+description: Add weight to every item.
+api-version: 1.13
+
+commands:
+   pw:
+      description: Main PlayerWeight Command
+      
+permissions:
+   playerweight.*:
+     description: Gives access to all PlayerWeight features
+     default: op
+     children:
+       playerweight.debug: true
+       playerweight.reload: true
+   playerweight.debug:
+     description: Allow use of the debug command
+     default: false
+   playerweight.reload:
+     description: Allow the reload of PlayerWeight
+     default: false
+   playerweight.bypass:
+     description: Player doesn't get speed changed
+     default: false
