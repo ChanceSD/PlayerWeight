@@ -13,48 +13,49 @@ import me.chancesd.playerweight.PlayerWeight;
 
 public class PlayerListener implements Listener {
 
-	private PlayerWeight plugin;
+	private final PlayerWeight plugin;
 
-	public PlayerListener(PlayerWeight plugin) {
+	public PlayerListener(final PlayerWeight plugin) {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
-		Player p = event.getPlayer();
+	public void onPlayerJoin(final PlayerJoinEvent event) {
+		final Player p = event.getPlayer();
 		delay(p, 3);
 	}
 
 	@EventHandler
-	public void onInventoryClick(InventoryClickEvent event) {
+	public void onInventoryClick(final InventoryClickEvent event) {
 		if (event.getWhoClicked() instanceof Player) {
-			Player p = (Player) event.getWhoClicked();
+			final Player p = (Player) event.getWhoClicked();
 			delay(p, 1);
 		}
 	}
 
 	@EventHandler
-	public void onPlayerDrop(PlayerDropItemEvent event) {
-		Player p = event.getPlayer();
+	public void onPlayerDrop(final PlayerDropItemEvent event) {
+		final Player p = event.getPlayer();
 		plugin.wM.handler(p);
 	}
 
 	@EventHandler
-	public void onPlayerPickup(PlayerPickupItemEvent event) {
-		Player p = event.getPlayer();
+	public void onPlayerPickup(final PlayerPickupItemEvent event) {
+		final Player p = event.getPlayer();
 		delay(p, 1);
 	}
-	
+
 	@EventHandler
-	public void onPlayerExpGain(PlayerExpChangeEvent event) {
+	public void onPlayerExpGain(final PlayerExpChangeEvent event) {
 		if(!plugin.getConfig().getBoolean("Enable XP Bar", true))
 			return;
 		event.setAmount(0);
 	}
 
-	public void delay(final Player p, long ticks) {
+	public void delay(final Player p, final long ticks) {
 		plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+			@Override
 			public void run() {
 				plugin.wM.handler(p);
 			}

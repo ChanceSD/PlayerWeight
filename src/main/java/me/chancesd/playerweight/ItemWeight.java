@@ -6,7 +6,7 @@ public class ItemWeight extends ItemStack {
 
 	private double weight;
 
-	public ItemWeight(ItemStack i) {
+	public ItemWeight(final ItemStack i) {
 		super(i);
 		this.weight = getConfigWeight() * this.getAmount();
 	}
@@ -15,7 +15,7 @@ public class ItemWeight extends ItemStack {
 		this.weight = 0;
 	}
 
-	public static double getItemWeight(ItemStack i) {
+	public static double getItemWeight(final ItemStack i) {
 		if (i == null)
 			return 0;
 		else
@@ -26,12 +26,12 @@ public class ItemWeight extends ItemStack {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(final int weight) {
 		this.weight = weight;
 	}
 
 	public String getMaterial() {
-		short durability = this.getDurability();
+		final short durability = this.getDurability();
 		if (durability > 0 && this.getType().getMaxDurability() <= 0)
 			return this.getType().toString() + "," + durability;
 		return this.getType().toString();

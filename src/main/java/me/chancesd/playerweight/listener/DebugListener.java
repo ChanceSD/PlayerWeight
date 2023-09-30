@@ -8,17 +8,17 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import me.chancesd.playerweight.PlayerWeight;
 
 public class DebugListener implements Listener {
-	
-	private PlayerWeight plugin;
 
-	public DebugListener(PlayerWeight plugin) {
+	private final PlayerWeight plugin;
+
+	public DebugListener(final PlayerWeight plugin) {
 		this.plugin = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
-	public void onPlayerMove(PlayerMoveEvent event) {
-		Player p = event.getPlayer();
+	public void onPlayerMove(final PlayerMoveEvent event) {
+		final Player p = event.getPlayer();
 		if (plugin.debug) {
 			p.sendMessage("Speed: " + p.getWalkSpeed());
 			p.sendMessage("Percentage: " + plugin.wM.calculateWeightPercentage(plugin.wM.getWeight(p), p)+ "%");

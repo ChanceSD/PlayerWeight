@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class WeightManager {
 
-	private PlayerWeight plugin;
+	private final PlayerWeight plugin;
 	private int maxWeight;
 	private double lessThan;
 	private double between1;
@@ -18,43 +18,43 @@ public class WeightManager {
 	private double speedPercent1;
 	private double speedPercent2;
 	private double speedPercent3;
-	private HashMap<String, Integer> previousWeight = new HashMap<String, Integer>();
+	private final HashMap<String, Integer> previousWeight = new HashMap<>();
 
-	public WeightManager(PlayerWeight plugin) {
+	public WeightManager(final PlayerWeight plugin) {
 		this.plugin = plugin;
 		loadConfigVariables();
 	}
 
-	public double getWeight(Player p) {
+	public double getWeight(final Player p) {
 		double weight = 0;
-		for (ItemStack i : p.getInventory().getContents()) {
+		for (final ItemStack i : p.getInventory().getContents()) {
 			weight += ItemWeight.getItemWeight(i);
 		}
-		for (ItemStack i : p.getInventory().getArmorContents()) {
+		for (final ItemStack i : p.getInventory().getArmorContents()) {
 			weight += ItemWeight.getItemWeight(i);
 		}
 		return weight;
 	}
 
-	public void handler(Player p) {
+	public void handler(final Player p) {
 		if (p.hasPermission("playerweight.bypass"))
 			return;
 		int previousSector = 0;
-		int presentSector = getSector(calculateWeightPercentage(getWeight(p), p));
+		final int presentSector = getSector(calculateWeightPercentage(getWeight(p), p));
 		if (!plugin.getConfig().getBoolean("Disable Messages", false)) {
 			if (previousWeight.containsKey(p.getName()))
 				previousSector = previousWeight.put(p.getName(), presentSector);
 			else
 				previousWeight.put(p.getName(), presentSector);
 
-			if (presentSector > previousSector || (previousSector > 1 && presentSector == 1)) {
+			if (presentSector > previousSector || previousSector > 1 && presentSector == 1) {
 				p.sendMessage(announce(presentSector));
 			}
 		}
 		calculateSpeed(presentSector, p);
 	}
 
-	private String announce(int sector) {
+	private String announce(final int sector) {
 		switch (sector) {
 		case 1:
 			return plugin.translateColor(plugin.getConfig().getString("Less And Equal To.Message"));
@@ -68,22 +68,22 @@ public class WeightManager {
 		return null;
 	}
 
-	public Float calculateWeightPercentage(double weight, Player p) {
-		float weightPercent = (float) weight / getMaxW();
+	public Float calculateWeightPercentage(final double weight, final Player p) {
+		final float weightPercent = (float) weight / getMaxW();
 		if (plugin.getConfig().getBoolean("Enable XP Bar", true)) {
 			setExp(weightPercent, p);
 		}
 		return weightPercent;
 	}
 
-	public void setExp(Float weightPercent, Player p) {
+	public void setExp(final Float weightPercent, final Player p) {
 		if (weightPercent > 1)
 			p.setExp(1);
 		else
 			p.setExp(weightPercent);
 	}
 
-	public void calculateSpeed(int sector, Player p) {
+	public void calculateSpeed(final int sector, final Player p) {
 		switch (sector) {
 		case 1:
 			p.setWalkSpeed(speed(speedPercent));
@@ -100,7 +100,7 @@ public class WeightManager {
 		}
 	}
 
-	private int getSector(float weightPercent) {
+	private int getSector(final float weightPercent) {
 		if (weightPercent <= lessThan)
 			return 1;
 		if (weightPercent >= between1 && weightPercent <= between1_1)
@@ -117,7 +117,7 @@ public class WeightManager {
 		return this.maxWeight;
 	}
 
-	public float speed(double percent) {
+	public float speed(final double percent) {
 		return (float) (0.2 * percent);
 	}
 
@@ -133,8 +133,8 @@ public class WeightManager {
 		speedPercent3 = plugin.getConfig().getDouble("Bigger Than.SpeedPercent") / 100;
 	}
 
-	public void splitBetween(String a, int p) {
-		String[] between = a.split(",");
+	public void splitBetween(final String a, final int p) {
+		final String[] between = a.split(",");
 		if (p == 1) {
 			between1 = Double.parseDouble(between[0]) / 100;
 			between1_1 = Double.parseDouble(between[1]) / 100;

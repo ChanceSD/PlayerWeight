@@ -1,6 +1,5 @@
 package me.chancesd.playerweight;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
@@ -11,9 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.chancesd.playerweight.Updater.UpdateResult;
 import me.chancesd.playerweight.listener.DebugListener;
 import me.chancesd.playerweight.listener.PlayerListener;
+import me.chancesd.sdutils.metrics.Metrics;
+import me.chancesd.sdutils.updater.BukkitUpdater;
+import me.chancesd.sdutils.updater.Updater;
+import me.chancesd.sdutils.updater.Updater.UpdateResult;
+import me.chancesd.sdutils.updater.Updater.UpdateType;
 
 public class PlayerWeight extends JavaPlugin {
 
@@ -37,16 +40,13 @@ public class PlayerWeight extends JavaPlugin {
 		this.wM = new WeightManager(this);
 		if (getConfig().getBoolean("Update Check.Enabled"))
 			new BukkitRunnable() {
+				@Override
 				public void run() {
 					updater();
 				}
 			}.runTaskAsynchronously(this);
 
-//		try {
-//			MetricsLite metrics = new MetricsLite(this);
-//			metrics.start();
-//		} catch (IOException e) {
-//		}
+		new Metrics(this, 19930, !getConfig().getBoolean("Update Check.Enabled"));
 	}
 
 	@Override
@@ -97,14 +97,14 @@ public class PlayerWeight extends JavaPlugin {
 
 	public void updater() {
 		getLogger().info("Checking for updates...");
-		final Updater updater = new Updater(this, 69092, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
+		final Updater updater = new BukkitUpdater(this, 69092, UpdateType.VERSION_CHECK);
 		if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
 			getLogger().info("Update Available: " + updater.getLatestName());
-			if (getConfig().getBoolean("Update Check.Auto Update")) {
-				new Updater(this, 69092, this.getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+			if (getConfig().getBoolean("Update Check.Auto Update") && updater.downloadFile()) {
+				getLogger().info("Update downloaded to your update folder, it will be applied automatically on the next server restart");
 				return;
 			}
-			getLogger().info("Link: http://dev.bukkit.org/bukkit-plugins/playerweight/");
+			getLogger().info("Link: " + updater.getUpdateLink());
 		} else
 			getLogger().info("No update found");
 	}
