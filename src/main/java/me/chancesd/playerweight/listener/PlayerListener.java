@@ -5,7 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
@@ -44,13 +43,6 @@ public class PlayerListener implements Listener {
 	public void onPlayerPickup(final PlayerPickupItemEvent event) {
 		final Player p = event.getPlayer();
 		delay(p, 1);
-	}
-
-	@EventHandler
-	public void onPlayerExpGain(final PlayerExpChangeEvent event) {
-		if(!plugin.getConfig().getBoolean("Enable XP Bar", true))
-			return;
-		event.setAmount(0);
 	}
 
 	public void delay(final Player p, final long ticks) {

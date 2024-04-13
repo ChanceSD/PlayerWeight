@@ -78,9 +78,9 @@ public class WeightManager {
 
 	public void setExp(final Float weightPercent, final Player p) {
 		if (weightPercent > 1)
-			p.setExp(1);
+			p.sendExperienceChange(1);
 		else
-			p.setExp(weightPercent);
+			p.sendExperienceChange(weightPercent);
 	}
 
 	public void calculateSpeed(final int sector, final Player p) {

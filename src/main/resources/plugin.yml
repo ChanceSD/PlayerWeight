@@ -1,6 +1,6 @@
 name: PlayerWeight
 main: me.chancesd.playerweight.PlayerWeight
-version: 1.4
+version: 1.4.2
 author: ChanceSD
 description: Add weight to every item.
 api-version: 1.13
