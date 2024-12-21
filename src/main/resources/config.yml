@@ -1,3 +1,5 @@
+# Max weight a player can have (100%)
+# You can set custom max weight for each player using permissions such as playerweight.max.100 for 100 
 Max Weight: 180
 Enable XP Bar: true
 WeightCommand: '&6[&7PlayerWeight&6] &2Your weight is &6<weight>&2/&6<maxweight> &2(&6<weightpercent>%&2)'
@@ -21,6 +23,7 @@ Bigger Than:
   SpeedPercent: 50
   Message: '&6[&7PlayerWeight&6]&4 Oh No! What Have You Done!'
 
+# If the list of items is outdated, check here for recent item names - https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 ANVIL: 2
 APPLE: 0.3
 ARROW: 0.12

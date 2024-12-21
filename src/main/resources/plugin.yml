@@ -19,6 +19,9 @@ permissions:
    playerweight.debug:
      description: Allow use of the debug command
      default: false
+   playerweight.max:
+     description: Add custom max weights for players like playerweight.max.500
+     default: false
    playerweight.reload:
      description: Allow the reload of PlayerWeight
      default: false

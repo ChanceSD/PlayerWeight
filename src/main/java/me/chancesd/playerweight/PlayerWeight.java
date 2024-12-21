@@ -58,7 +58,7 @@ public class PlayerWeight extends JavaPlugin {
 				final DecimalFormatSymbols symbol = new DecimalFormatSymbols();
 				symbol.setDecimalSeparator('.');
 				final String message = translateColor(getConfig().getString("WeightCommand")).replace("<weight>", new DecimalFormat("#.##", symbol).format(weight))
-						.replace("<maxweight>", String.valueOf(wM.getMaxW()))
+						.replace("<maxweight>", String.valueOf(wM.getMaxW(p)))
 						.replace("<weightpercent>", String.valueOf((int) (wM.calculateWeightPercentage(weight, p) * 100)));
 				p.sendMessage(message);
 				return true;

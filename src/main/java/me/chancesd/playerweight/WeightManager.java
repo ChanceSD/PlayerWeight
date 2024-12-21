@@ -3,6 +3,7 @@ package me.chancesd.playerweight;
 import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 public class WeightManager {
 
@@ -69,7 +70,7 @@ public class WeightManager {
 	}
 
 	public Float calculateWeightPercentage(final double weight, final Player p) {
-		final float weightPercent = (float) weight / getMaxW();
+		final float weightPercent = (float) weight / getMaxW(p);
 		if (plugin.getConfig().getBoolean("Enable XP Bar", true)) {
 			setExp(weightPercent, p);
 		}
@@ -113,8 +114,21 @@ public class WeightManager {
 			return 0;
 	}
 
-	public int getMaxW() {
-		return this.maxWeight;
+	public int getMaxW(final Player player) {
+		return getAmount(player, this.maxWeight);
+	}
+
+	public int getAmount(final Player player, final int defaultValue) {
+		final String permissionPrefix = "playerweight.max.";
+
+		for (final PermissionAttachmentInfo attachmentInfo : player.getEffectivePermissions()) {
+			final String permission = attachmentInfo.getPermission();
+			if (permission.startsWith(permissionPrefix)) {
+				return Integer.parseInt(permission.substring(permission.lastIndexOf(".") + 1));
+			}
+		}
+
+		return defaultValue;
 	}
 
 	public float speed(final double percent) {

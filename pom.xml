@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.chancesd</groupId>
 	<artifactId>playerweight</artifactId>
-	<version>1.4.2</version>
+	<version>1.5</version>
 
 	<name>PlayerWeight</name>
 
@@ -24,13 +24,13 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.20.4-R0.1-SNAPSHOT</version>
+			<version>1.21.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>me.chancesd.sdutils</groupId>
 			<artifactId>sdutils</artifactId>
-			<version>1.1-SNAPSHOT</version>
+			<version>1.3-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
