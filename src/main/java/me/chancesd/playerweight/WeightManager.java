@@ -81,7 +81,7 @@ public class WeightManager {
 		if (weightPercent > 1)
 			p.sendExperienceChange(1);
 		else
-			p.sendExperienceChange(weightPercent);
+			p.sendExperienceChange(Math.max(0, weightPercent));
 	}
 
 	public void calculateSpeed(final int sector, final Player p) {

@@ -27,9 +27,8 @@ public class PlayerListener implements Listener {
 
 	@EventHandler
 	public void onInventoryClick(final InventoryClickEvent event) {
-		if (event.getWhoClicked() instanceof Player) {
-			final Player p = (Player) event.getWhoClicked();
-			delay(p, 1);
+		if (event.getWhoClicked() instanceof final Player player) {
+			delay(player, 1);
 		}
 	}
 

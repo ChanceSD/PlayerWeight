@@ -51,19 +51,18 @@ public class PlayerWeight extends JavaPlugin {
 
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-		if (command.getLabel().equals("pw") && sender instanceof Player) {
-			final Player p = (Player) sender;
+		if (command.getLabel().equals("pw") && sender instanceof final Player player) {
 			if (args.length == 0) {
-				final double weight = wM.getWeight(p);
+				final double weight = wM.getWeight(player);
 				final DecimalFormatSymbols symbol = new DecimalFormatSymbols();
 				symbol.setDecimalSeparator('.');
 				final String message = translateColor(getConfig().getString("WeightCommand")).replace("<weight>", new DecimalFormat("#.##", symbol).format(weight))
-						.replace("<maxweight>", String.valueOf(wM.getMaxW(p)))
-						.replace("<weightpercent>", String.valueOf((int) (wM.calculateWeightPercentage(weight, p) * 100)));
-				p.sendMessage(message);
+						.replace("<maxweight>", String.valueOf(wM.getMaxW(player)))
+						.replace("<weightpercent>", String.valueOf((int) (wM.calculateWeightPercentage(weight, player) * 100)));
+				player.sendMessage(message);
 				return true;
 			} else if (args.length == 1) {
-				if (args[0].equalsIgnoreCase("debug") && p.hasPermission("playerweight.debug")) {
+				if (args[0].equalsIgnoreCase("debug") && player.hasPermission("playerweight.debug")) {
 					if (getConfig().getBoolean("Debug")) {
 						if (!debug) {
 							debug = true;
@@ -72,15 +71,15 @@ public class PlayerWeight extends JavaPlugin {
 						}
 						return true;
 					} else if (!getConfig().getBoolean("Debug")) {
-						p.sendMessage("§4Debug needs to be enabled in config!");
+						player.sendMessage("§4Debug needs to be enabled in config!");
 						return true;
 					}
 				}
-				if (args[0].equalsIgnoreCase("reload") && p.hasPermission("playerweight.reload")) {
+				if (args[0].equalsIgnoreCase("reload") && player.hasPermission("playerweight.reload")) {
 					getServer().getPluginManager().disablePlugin(this);
 					getServer().getPluginManager().enablePlugin(this);
-					for (final Player player : getServer().getOnlinePlayers()) {
-						wM.handler(player);
+					for (final Player p : getServer().getOnlinePlayers()) {
+						wM.handler(p);
 					}
 					sender.sendMessage("§6[§7PlayerWeight§6] §fPlayerWeight Reloaded!");
 					return true;
