@@ -2,17 +2,17 @@ package me.chancesd.playerweight;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import me.chancesd.playerweight.listener.DebugListener;
 import me.chancesd.playerweight.listener.PlayerListener;
 import me.chancesd.sdutils.metrics.Metrics;
+import me.chancesd.sdutils.scheduler.ScheduleUtils;
 import me.chancesd.sdutils.updater.BukkitUpdater;
 import me.chancesd.sdutils.updater.Updater;
 import me.chancesd.sdutils.updater.Updater.UpdateResult;
@@ -27,6 +27,7 @@ public class PlayerWeight extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		PlayerWeight.plugin = this;
+		ScheduleUtils.setupExecutor(this);
 		saveDefaultConfig();
 		if (getConfig().getInt("Config Version", 0) < 5) {
 			getConfig().options().copyDefaults(true);
@@ -38,13 +39,9 @@ public class PlayerWeight extends JavaPlugin {
 			new DebugListener(this);
 		new PlayerListener(this);
 		this.wM = new WeightManager(this);
-		if (getConfig().getBoolean("Update Check.Enabled"))
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					updater();
-				}
-			}.runTaskAsynchronously(this);
+		if (getConfig().getBoolean("Update Check.Enabled")) {
+			ScheduleUtils.runAsyncTimer(this::updater, 5, 18000, TimeUnit.SECONDS);
+		}
 
 		new Metrics(this, 19930, !getConfig().getBoolean("Update Check.Enabled"));
 	}

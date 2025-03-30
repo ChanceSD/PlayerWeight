@@ -1,9 +1,10 @@
 name: PlayerWeight
 main: me.chancesd.playerweight.PlayerWeight
-version: 1.5.1
+version: ${project.version}
 author: ChanceSD
 description: Add weight to every item.
 api-version: 1.13
+folia-supported: true
 
 commands:
    pw:

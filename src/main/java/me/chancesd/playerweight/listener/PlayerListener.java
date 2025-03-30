@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import me.chancesd.playerweight.PlayerWeight;
+import me.chancesd.sdutils.scheduler.ScheduleUtils;
 
 public class PlayerListener implements Listener {
 
@@ -45,11 +46,6 @@ public class PlayerListener implements Listener {
 	}
 
 	public void delay(final Player p, final long ticks) {
-		plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-			@Override
-			public void run() {
-				plugin.wM.handler(p);
-			}
-		}, ticks);
+		ScheduleUtils.runPlatformTaskLater(() -> plugin.wM.handler(p), p, ticks);
 	}
 }

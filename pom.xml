@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.chancesd</groupId>
 	<artifactId>playerweight</artifactId>
-	<version>1.5.1</version>
+	<version>1.6</version>
 
 	<name>PlayerWeight</name>
 
@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.21.4-R0.1-SNAPSHOT</version>
+			<version>1.21.5-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -35,6 +35,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -49,6 +55,12 @@
 				<version>3.5.1</version>
 				<configuration>
 					<minimizeJar>true</minimizeJar>
+               		<relocations>
+						<relocation>
+							<pattern>me.chancesd.sdutils</pattern>
+							<shadedPattern>me.chancesd.playerweight.sdutils</shadedPattern>
+						</relocation>
+					</relocations>
 				</configuration>
 				<executions>
 					<execution>
